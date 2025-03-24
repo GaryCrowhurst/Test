@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BlockMap - Bitcoin Block Visualization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="header">
+        <h1>BlockMap <span id="currentBlockDisplay"></span></h1>
+        <button id="toggleFormButton" onclick="toggleFormVisibility()">
+            <i class="fa fa-cog"></i> Settings
+        </button>
+    </div>
+
+    <div id="loadingIndicator">
+        <div class="spinner"></div>
+        <div>Loading Block Data...</div>
+    </div>
+
+    <div id="form-container">
+        <form id="blockForm">
+            <div class="form-group">
+                <label for="blockHash">Block Number:</label>
+                <div class="input-with-button">
+                    <input type="text" id="blockHash" name="blockHash" placeholder="Enter block number...">
+                    <button id="loadingIndicatorButton" type="submit">Load</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="viewSelector">Visualization Mode:</label>
+                <select id="viewSelector" onchange="changeViewMode(this.value)">
+                    <option value="sphericalStandard">BitSpace</option>
+                    <option value="cube">Cube Formation</option>
+                    <option value="standard">Century View</option>
+                    <option value="planetary">Stilltura</option>
+                    <option value="sphere">Sphere</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rgbSlider">Color Variation:</label>
+                <div class="slider-container">
+                    <input type="range" id="rgbSlider" min="0" max="4" value="0" onchange="adjustRGBPosition(this.value)">
+                    <span class="slider-value" id="rgbValue">0</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="spreadSlider">Element Spread:</label>
+                <div class="slider-container">
+                    <input type="range" id="spreadSlider" min="10" max="100" value="20" onchange="adjustSpread(this.value)">
+                    <span class="slider-value" id="spreadValue">20</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="speedSlider">Orbit Speed:</label>
+                <div class="slider-container">
+                    <input type="range" id="speedSlider" min="0.05" max="2.5" step="0.05" value="0.5" onchange="adjustOrbitSpeed(this.value)">
+                    <span class="slider-value" id="speedValue">0.5</span>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <button type="button" class="reset-btn" onclick="resetToDefaults()">Reset to Defaults</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="canvasContainer"></div>
+    
+    <div id="transactionDetailsContainer" class="hidden">
+        <div class="details-header">
+            <h3>Transaction Details</h3>
+            <button class="close-btn" onclick="closeTransactionDetailsContainer()">×</button>
+        </div>
+        <div id="transactionDetailsContent"></div>
+    </div>
+
+    <div class="button-container">
+        <button class="action-btn" onclick="window.open('https://twitter.com/Switch_900')">
+            <i class="fab fa-twitter"></i> @Switch_900
+        </button>
+        <button class="action-btn" onclick="window.open('umbrel.html')">
+            <i class="fas fa-server"></i> Umbrel Setup
+        </button>
+        <button class="action-btn" onclick="window.open('bitpaint')">
+            <i class="fas fa-paint-brush"></i> BitPaint
+        </button>
+    </div>
+
+    <div id="tooltip" class="tooltip hidden"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
